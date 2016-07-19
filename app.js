@@ -23,13 +23,21 @@ const TYPEARR = ["number","array","object","null","function","undefined","boolea
 const GUIDEOPTIONS = {
   type : null,
   toNumber : true,
-  // func : null,
   allowValueNull : false,
   allowKeyNull : false
+  // func : null,
 }
 
+const GUIDEOPTIONSCONDITION = {
+  type : [TYPE.NULL,TYPE.STRING],
+  toNumber : [TYPE.BOOLEAN],
+  allowValueNull : [TYPE.BOOLEAN],
+  allowKeyNull : [TYPE.BOOLEAN]
+}
 
 const GUIDEKEYS = Object.keys(GUIDEOPTIONS);
+
+
 var typeOf = function(object){
   return Object.prototype.toString.call(object).replace("[", "").replace("]", "").replace("object ", "").toLowerCase();
 }
@@ -41,8 +49,6 @@ var permit = function(obj,req){
   if(typeOf(obj) != TYPE.OBJECT || !(typeOf(req) == TYPE.OBJECT || typeOf(req) == TYPE.ARRAY)){
     return false;
   }
-
-  let reqType = typeOf(req);
 
   //copy of req
   let request = {};
@@ -95,21 +101,8 @@ var permit = function(obj,req){
             let reqOptValue = reqItemOpt[reqOptKey];
             let reqOptValueType = typeOf(reqOptValue);
 
-            //todo : make condition object and make dynamic comapre
-            if(reqOptKey == "type" && !(TYPEARR.indexOf(reqOptValueType) > 0 || reqOptValueType == null)){
-              return false;
-            }
-            else if(reqOptKey == "toNumber" && reqOptValueType != TYPE.BOOLEAN){
-              return false;
-            }
-            // else if(reqOptKey == "func" && reqOptValueType != TYPE.FUNCTION){
-            //   return false;
-            // }
-            else if(reqOptKey == "allowValueNull" && reqOptValueType != TYPE.BOOLEAN){
-              return false;
-            }
-            else if(reqOptKey == "allowKeyNull" && reqOptValueType != TYPE.BOOLEAN){
-              return false;
+            if(GUIDEKEYS.indexOf(reqOptKey) < 0 || GUIDEOPTIONSCONDITION[reqOptKey].indexOf(typeOf(reqItemOpt[reqOptKey])) < 0 ){
+              console.log("!!")
             }
             else{
               guide[key][reqOptKey] = reqItemOpt[reqOptKey];
@@ -132,7 +125,6 @@ var permit = function(obj,req){
 
   //compare!
   for(var i = 0; i<guideKeys.length;i++){
-
 
     //있어야한다. 없으면 끝
     var key = guideKeys[i];
