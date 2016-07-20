@@ -45,8 +45,10 @@ var typeOf = function(object){
 
 var permit = function(obj,req){
 
+  var reqType = typeOf(req);
+  var objType = typeOf(obj);
   //obj must be Object && com must be
-  if(typeOf(obj) != TYPE.OBJECT || !(typeOf(req) == TYPE.OBJECT || typeOf(req) == TYPE.ARRAY)){
+  if(objType != TYPE.OBJECT || !(reqType == TYPE.OBJECT || reqType == TYPE.ARRAY)){
     return false;
   }
 
