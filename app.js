@@ -24,7 +24,7 @@ const GUIDEOPTIONS = {
   type : null,
   toNumber : true,
   allowValueNull : false,
-  allowKeyNull : false
+  allowKeyNull :  false
   // func : null,
 }
 
