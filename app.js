@@ -11,7 +11,7 @@ const TYPE = {
   BOOLEAN     : "boolean"
 }
 
-const TYPEARR = ["number","array","object","null","function","undefined","boolean"];
+const TYPEARR = ["string","number","array","object","null","function","undefined","boolean"];
 // null           ->  Null
 // []             ->  Array
 // {}             ->  Object
@@ -123,8 +123,6 @@ var permit = function(obj,req){
   let guideKeys = Object.keys(guide);
 
 
-
-
   //compare!
   for(var i = 0; i<guideKeys.length;i++){
 
@@ -176,5 +174,46 @@ var permit = function(obj,req){
 }
 
 
+var checker = function(req,res,next){
+  console.log("!!!!");
+  if(req.method == "GET"){
+    data = req.params;
+  }
+  else{
+    data = req.body;
+  }
+  var result = permit(data,opt);
+  if(result){
+    next();
+  }
+  else{
+    next(new error);
+  }
+}
+
+var asModule = function(opt){
+  var data = {};
+  var opt = opt || {};
+  return function(req,res,next){
+    console.log("!!!!");
+    if(req.method == "GET"){
+      data = Object.assign(req.params,req.query) ;
+    }
+    else{
+      data = req.body;
+    }
+    var result = permit(data,opt);
+
+    if(result){
+      next();
+    }
+    else{
+      next(new Error("parameter is not permit"));
+    }
+  };
+}
+
+
 exports = module.exports = permit;
 exports.typeOf = typeOf;
+exports.asModule = asModule;
