@@ -1,5 +1,6 @@
 "use strict";
 
+//def data types
 const TYPE = {
   NUMBER      : "number",
   ARRAY       : "array",
@@ -11,15 +12,10 @@ const TYPE = {
   BOOLEAN     : "boolean"
 }
 
+//memorizing data type valuse
 const TYPEARR = ["string","number","array","object","null","function","undefined","boolean"];
-// null           ->  Null
-// []             ->  Array
-// {}             ->  Object
-// 1              ->  Number
-// "1"            ->  String
-// "!"            ->  String
-// undefined      ->  Undefined
-// function(){}   ->  Funtion
+
+//options guide
 const GUIDEOPTIONS = {
   type : null,
   toNumber : true,
@@ -28,6 +24,10 @@ const GUIDEOPTIONS = {
   // func : null,
 }
 
+//options guide keys
+const GUIDEKEYS = Object.keys(GUIDEOPTIONS);
+
+//supply type in options guide
 const GUIDEOPTIONSCONDITION = {
   type : [TYPE.NULL,TYPE.STRING],
   toNumber : [TYPE.BOOLEAN],
@@ -35,14 +35,20 @@ const GUIDEOPTIONSCONDITION = {
   allowKeyNull : [TYPE.BOOLEAN]
 }
 
-const GUIDEKEYS = Object.keys(GUIDEOPTIONS);
-
-
+// null           ->  Null
+// []             ->  Array
+// {}             ->  Object
+// 1              ->  Number
+// "1"            ->  String
+// "!"            ->  String
+// undefined      ->  Undefined
+// function(){}   ->  Funtion
 var typeOf = function(object){
   return Object.prototype.toString.call(object).replace("[", "").replace("]", "").replace("object ", "").toLowerCase();
 }
 
 
+//main function
 var permit = function(obj,req){
 
   var reqType = typeOf(req);
@@ -174,28 +180,11 @@ var permit = function(obj,req){
 }
 
 
-var checker = function(req,res,next){
-  console.log("!!!!");
-  if(req.method == "GET"){
-    data = req.params;
-  }
-  else{
-    data = req.body;
-  }
-  var result = permit(data,opt);
-  if(result){
-    next();
-  }
-  else{
-    next(new error);
-  }
-}
 
 var asModule = function(opt){
   var data = {};
   var opt = opt || {};
   return function(req,res,next){
-    console.log("!!!!");
     if(req.method == "GET"){
       data = Object.assign(req.params,req.query) ;
     }

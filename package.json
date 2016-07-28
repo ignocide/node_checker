@@ -1,0 +1,22 @@
+{
+  "name": "permit-param",
+  "version": "1.0.0",
+  "description": "check paramiter are exited and type etc..",
+  "main": "app.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ignocide/node_checker.git"
+  },
+  "author": "ignocide",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ignocide/node_checker/issues"
+  },
+  "homepage": "https://github.com/ignocide/node_checker#readme"
+}
