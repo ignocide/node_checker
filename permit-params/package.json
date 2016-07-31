@@ -1,8 +1,8 @@
 {
-  "name": "permit-param",
+  "name": "permit-params",
   "version": "1.0.0",
   "description": "check paramiter are exited and type etc..",
-  "main": "app.js",
+  "main": "index.js",
   "directories": {
     "example": "example"
   },
