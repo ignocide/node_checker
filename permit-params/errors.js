@@ -1,13 +1,19 @@
-module.exports. = function OptionError(message) {
+module.exports.OptionError = function(message) {
 
    Error.captureStackTrace(this);
-   this.name = "OptionWrongError";
+   this.constructor.name = "OptionWrongError";
    this.message = message || "Option is wrong";
+
 };
 
-module.exports = function TypeError(message) {
+module.exports.TypeError = function (message) {
 
    Error.captureStackTrace(this);
-   this.name = "TypeError";
+   this.constructor.name = "TypeError";
    this.message = message || "Type is wrong";
+   this.items = {}
 };
+
+require('util').inherits(module.exports.OptionError, Error);
+
+require('util').inherits(module.exports.TypeError, Error);
